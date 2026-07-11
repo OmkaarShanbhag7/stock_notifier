@@ -1,0 +1,32 @@
+name: Daily Stock Notifier Execution
+
+on:
+  schedule:
+    # 15:40 IST translates to 10:10 UTC (GitHub clocks run strictly on UTC time!)
+    - cron: '10 10 * * 1-5'
+  workflow_dispatch: # This allows you to manually trigger the run with a single click on GitHub for testing!
+
+jobs:
+  build-and-run:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository Code
+      uses: actions/checkout@v4
+
+    - name: Install System Dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y libcurl4-openssl-dev nlohmann-json3-dev cmake build-essential
+
+    - name: Create Build Environment and Compile
+      run: |
+        mkdir build
+        cd build
+        cmake ..
+        make
+
+    - name: Run Stock Notifier Engine
+      run: |
+        cd build
+        ./stock_notifier
