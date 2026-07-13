@@ -2,9 +2,8 @@ name: Daily Stock Notifier Execution
 
 on:
   schedule:
-    # 15:40 IST translates to 10:10 UTC (GitHub clocks run strictly on UTC time!)
-    - cron: '10 10 * * 1-5'
-  workflow_dispatch: # This allows you to manually trigger the run with a single click on GitHub for testing!
+    - cron: '30 10 * * 1-5'
+  workflow_dispatch:
 
 jobs:
   build-and-run:
